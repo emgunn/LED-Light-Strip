@@ -7,6 +7,8 @@ There are some things to take note of:
 
 * I used a 16.4ft WS2812B Individually Addressable LED Strip Light: https://www.amazon.com/gp/product/B00ZHB9M6A/ref=oh_aui_detailpage_o04_s00?ie=UTF8&psc=1
 * It contains 150 lights with addresses (each light is actually comprised of 3 LED's: a green, a red, and a blue; therefore there are actually 450 lights)
+* The RGB ordering for this strip is GRB.
+* These functions were made with the use of the FastLED library. The repository can be found here: https://github.com/FastLED/FastLED
 * The light is powered by a 5V DC power source. I used an AC/DC power adapter that you can just plug into an outlet: https://www.amazon.com/gp/product/B01M0KLECZ/ref=oh_aui_detailpage_o01_s00?ie=UTF8&psc=1
 * The light is controlled with an Arduino Uno. The code is written in the Arduino language.
 * These functions were made from scratch and are relatively simple and easy to follow. There is much, much more to be created with code
