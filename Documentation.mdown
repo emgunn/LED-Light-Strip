@@ -44,7 +44,7 @@ Turns off all the lights by setting them to black and showing them
 Getter method to check if an LED is off (black)
 
 **PARAMETERS**:
-* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) led color object/light to be checked
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) led - color object/light to be checked
 
 **RETURN**: boolean true if off, false if on
 
@@ -55,8 +55,8 @@ Saves the current LED configuration into a backup
 Saves the current LED configuration within a given range into a backup
 
 **PARAMETERS**:
-* int startIndex start of the range to save (inclusive)
-* int endIndex end of the range to save (inclusive)
+* int startIndex - start of the range to save (inclusive)
+* int endIndex - end of the range to save (inclusive)
 
 ## void loadBoard()
 Loads the saved LED configuration
@@ -65,12 +65,20 @@ Loads the saved LED configuration
 Loads the saved LED configuration within a given range
 
 **PARAMETERS**:
-* int startIndex start of the range to load (inclusive)
-* int endIndex end of the range to load (inclusive)
+* int startIndex - start of the range to load (inclusive)
+* int endIndex - end of the range to load (inclusive)
 
 ## void fadeRGB(int delaySpeed)
 Switches between red, green, and blue. Fades in and out
 
 **PARAMETERS**:
-* int delaySpeed the amount of time in ms between each change in brightness
+* int delaySpeed - the amount of time in ms between each change in brightness
 
+## void fadeRandomColors(int iterations, int delaySpeed)
+Gradually changes colors by adding or subtracting 1 randomly from either the R, G, or B value each iteration
+
+**BUG**: Colors sometimes jump instead of gradually change
+
+**PARAMETERS**:
+* int iterations - number of iterations to go through before ending the function
+* int delaySpeed - time in ms to delay each iteration
