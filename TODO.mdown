@@ -1,6 +1,8 @@
 TO-DO:
 ======
 
+**Some functions still to be added**:
+
 * run function that speeds up and slows down by changing delay
 
 * battery/loading screen: light strip fills up in blocks

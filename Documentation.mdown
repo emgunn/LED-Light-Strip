@@ -235,7 +235,7 @@ Randomly makes lights disappear up to a given number
 * int num - number of lights to turn off
 * int delaySpeed - time in ms between each consecutive LED
 
-## randomAppearDisappear(int num, int delaySpeed)
+## void randomAppearDisappear(int num, int delaySpeed)
 Random colored lights appear first, then disappear
 
 **PARAMETERS**:

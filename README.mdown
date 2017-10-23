@@ -1,7 +1,7 @@
 README
 ======
 
-s is a short library of simple functions for a digital RGB LED light strip written in the Arduino language.
+This is a short library of simple functions for a digital RGB LED light strip written in the Arduino language.
 
 There are some ngs to take note of:
 
