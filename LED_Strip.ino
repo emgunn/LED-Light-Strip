@@ -8,62 +8,20 @@
 #define LED_PIN 3
 #define MAX_VAL 255
 #define NUM_COLORS 3
+#define LOW_MID 74
+#define HIGH_MID 75
 
 CRGB led[NUM_LEDS];
 CRGB backup[NUM_LEDS];
 
 void setup() {
   FastLED.addLeds<WS2811, LED_PIN>(led, NUM_LEDS);
-
-  //insert static setup code here
-  //setColor(CRGB(150,150,150));
+  //insert static setup code below
 }
+
 void loop() {
-  //gradualBlinkIncrease(10, 1000, 50);
-
-  //randomAppearDisappear(150, 20);
-
-  //RANDOM COLOR SUICIDES
-  /*CRGB color = randomColor();
-  suicides(color, 25, 20);*/
-
-  //RANDOM COLOR SKIP FILL demo
-  CRGB color = randomColor();
-  wave(color, 2, 20);
-  delay(3000);
-  waveRandom(2, 20);
-  delay(5000);
-  off();
-  CRGB color2 = randomColor();
-  wave(color, 5, 40);
-  delay(3000);
-  waveRandom(5, 40);
-  delay(5000);
-  off();
-
-  /*CRGB color = randomColor();
-  singleColorRun(color, CRGB(0,0,0), 20, 0, 150);
-  singleColorRunBackwards(color, CRGB(0,0,0), 20, 150, 0);*/
-  
-  /*popRandom(150, 20);
-  popOverwrite(150, 20, CRGB(50,0,50));*/
-  //unpop(150, 20);
-  
-  /*alternatingNRandomColors(3, 50, 0, 200);
-  delay(5000);*/
-
-  
-  /*alternating3Colors(5, randomColor(), randomColor(), randomColor());
-  delay(3000);*/
-
-  /*alternatingNRandomColors(1, 150);
-  delay(5000);*/
-
-  /*
-  CRGB color1 = randomColor();
-  CRGB color2 = randomColor();
-  singleColorRun(color1, color2, 10,
-    0, 150, 30); */
+  int selection = random(0, 13);
+  demo(selection);
 }
 
 /**
@@ -88,58 +46,6 @@ void setColor(CRGB color, int startIndex, int endIndex) {
     led[i] = color;
   }
   FastLED.show();
-}
-
-/**
- * Sets entire strip to given color and shows it
- * @param int hex represents the integer hex value of the color
- */
-void setColor(int hex) {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(hex);
-  }
-  FastLED.show();
-}
-
-/**
- * Sets entire strip to given color and shows it
- * @param ints R, G, and B represent the RGB values
- */
-void setColor(int R, int G, int B) {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(R, G, B);
-  }
-  FastLED.show();
-}
-
-/**
- * Sets entire strip to a given intensity of red
- * @param int val represents the 0-255 value for red
- */
-void setRed(int val) {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(val, 0, 0);
-  }
-}
-
-/**
- * Sets entire strip to a given intensity of green
- * @param int val represents the 0-255 value for green
- */
-void setGreen(int val) {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(0, val, 0);
-  }
-}
-
-/**
- * Sets entire strip to a given intensity of blue
- * @param int val represents the 0-255 value for blue
- */
-void setBlue(int val) {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(0, 0, val);
-  }
 }
 
 /**
@@ -213,87 +119,80 @@ void loadBoard() {
   FastLED.show();
 }
 
+/**
+ * Loads a saved board to the current board
+ * @param int startIndex represents the start of the range to load
+ * @param int endIndex represents the end of the range to load
+ */
 void loadBoard(int startIndex, int endIndex) {
   for(int i = startIndex; i < endIndex + 1; i++) {
     led[i] = backup[i];
   }
   FastLED.show();
-}
-
-/**
- * Sets the entire strip to the brightest red
- */
-void makeRed() {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(MAX_VAL, 0, 0);
-  }
-}
-
-/**
- * Sets the entire strip to the brightest green
- */
-void makeGreen() {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(0, MAX_VAL, 0);
-  }
-}
-
-/**
- * Sets the entire strip to the brightest blue
- */
-void makeBlue() {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    led[i] = CRGB(0, 0, MAX_VAL);
-  }
-}
+} 
 
 /**
  * Switches between red, green, and blue. Fades in and out
  * @param int timeDelay represents the amount of time in ms
  *        to delay the fade (timeDelay = 10 is a good setting)
  */
-void fadeRGB(int timeDelay) {
+void fadeRGB(int delaySpeed) {
   for(int i = 0; i < MAX_VAL + 1; i++) {
-    setBlue(i);
+    for(int j = 0; j < NUM_LEDS; j++) {
+      led[j] = CRGB(0, 0, i);
+    }
     FastLED.show();
-    delay(timeDelay);
+    delay(delaySpeed);
   }
   for(int i = MAX_VAL; i > 0; i--) {
-    setBlue(i);
+    for(int j = 0; j < NUM_LEDS; j++) {
+      led[j] = CRGB(0, 0, i);
+    }
     FastLED.show();
-    delay(timeDelay);
+    delay(delaySpeed);
   }
   for(int i = 0; i < MAX_VAL + 1; i++) {
-    setRed(i);
+    for(int j = 0; j < NUM_LEDS; j++) {
+      led[j] = CRGB(0, i, 0);
+    }
     FastLED.show();
-    delay(timeDelay);
+    delay(delaySpeed);
   }
   for(int i = MAX_VAL; i > 0; i--) {
-    setRed(i);
+    for(int j = 0; j < NUM_LEDS; j++) {
+      led[j] = CRGB(0, i, 0);
+    }
     FastLED.show();
-    delay(timeDelay);
+    delay(delaySpeed);
   }
   for(int i = 0; i < MAX_VAL + 1; i++) {
-    setGreen(i);
+    for(int j = 0; j < NUM_LEDS; j++) {
+      led[j] = CRGB(i, 0, 0);
+    }
     FastLED.show();
-    delay(timeDelay);
+    delay(delaySpeed);
   }
   for(int i = MAX_VAL; i > 0; i--) {
-    setGreen(i);
+    for(int j = 0; j < NUM_LEDS; j++) {
+      led[j] = CRGB(i, 0, 0);
+    }
     FastLED.show();
-    delay(timeDelay);
+    delay(delaySpeed);
   }
 }
 
 /**
  * Gradually changes colors by adding or subtracting a random value between
  * R, G, or B
+ * @param int iterations represents the number of iterations to
+ *        go through before ending, set it to a high number like
+ *        10000
  * @param int timeDelay represents the time in ms to delay each iteration
  */
 //set delay to 0 for a dynamic color set
 //set delay to 10 for a slower change
 //still something wrong as colors should not be jumping (should have a gradual change)
-void fadeRandomColors(int timeDelay) {
+void fadeRandomColors(int iterations, int delaySpeed) {
   //red is 0, green is 1, blue is 2
   int RGB[NUM_COLORS];
   //directions: false = adding, true = subtracting
@@ -304,7 +203,8 @@ void fadeRandomColors(int timeDelay) {
     RGB[i] = 1;
   }
   int randomNum;
-  while(1) {
+  int count = 0;
+  while(count < iterations) {
     for(int i = 0; i < NUM_COLORS; i++) {
       if(RGB[i] >= MAX_VAL || RGB[i] == 1) {
         dir[i] = !dir[i];
@@ -318,7 +218,8 @@ void fadeRandomColors(int timeDelay) {
       RGB[randomNum]--;
     }
     setColor(RGB[0], RGB[1], RGB[2]);
-    delay(timeDelay);
+    delay(delaySpeed);
+    count++;
   }
 }
 
@@ -327,12 +228,12 @@ void fadeRandomColors(int timeDelay) {
  * and ceilings for the R, G, and B values
  * @param int changeSpeed represents the timed delay in ms
  */
-void setRandomColor(int changeSpeed) {
+void setRandomColor(int delaySpeed) {
   int red = random(0, MAX_VAL + 1);
   int green = random(0, MAX_VAL + 1);
   int blue = random(0, MAX_VAL + 1);
   setColor(red, green, blue);
-  delay(changeSpeed);
+  delay(delaySpeed);
 }
 
 /**
@@ -344,12 +245,12 @@ void setRandomColor(int changeSpeed) {
  */
 //int floor should be 0 for all colors
 //int ceiling should be 256 for all colors
-void setRandomColor(int changeSpeed, int floor1, int ceiling) {
+void setRandomColor(int floor1, int ceiling, int delaySpeed) {
   int red = random(floor1, ceiling);
   int green = random(floor1, ceiling);
   int blue = random(floor1, ceiling);
   setColor(red, green, blue);
-  delay(changeSpeed);
+  delay(delaySpeed);
 }
 
 /**
@@ -359,43 +260,23 @@ void setRandomColor(int changeSpeed, int floor1, int ceiling) {
  * @param int ceiling represents the maximum value (exclusive) for R, G, and B
  */
 //0 and 256 for all colors
-void allRandomColors(int changeSpeed, int floor1, int ceiling) {
+void allRandomColors(int floor1, int ceiling, int delaySpeed) {
   for(int i = 0; i < NUM_LEDS; i++) {
-    int red = random(floor1, ceiling);
-    int green = random(floor1, ceiling);
-    int blue = random(floor1, ceiling);
-    led[i] = CRGB(red, green, blue);
+    led[i] = randomColor(floor1, ceiling);
   }
   FastLED.show();
-  delay(changeSpeed);
+  delay(delaySpeed);
 }
-
-/**
- * Swaps between 3 given colors (taken as their integer value)
- * @param int timeDelay represents delay between swaps in ms
- * @param int color1 represents first color value
- * @param int color2 represents second color value
- * @param int color3 represents third color value
- */
-//timeDelay of 1000 is around 2 seconds
-void swap3Colors(int timeDelay, int color1, int color2, int color3) {
-  delay(timeDelay);
-  setColor(color1);
-  delay(timeDelay);
-  setColor(color2);
-  delay(timeDelay);
-  setColor(color3);
- }
 
 /**
  * Shuts off the entire strip for given time in ms
  * @param int changeSpeed represents delay in ms
  */
 //color has already been set and shown
-void blink(int changeSpeed) {
+void blink(int delaySpeed) {
   //blinks it off
   off();
-  delay(changeSpeed);
+  delay(delaySpeed);
 }
 
 /**
@@ -404,11 +285,11 @@ void blink(int changeSpeed) {
  * @param int color represents hex value of color
  * @param int changeSpeed represents delay in ms
  */
-void blink(int color, int changeSpeed) {
+void blink(int color, int delaySpeed) {
  setColor(color);
- delay(changeSpeed);
+ delay(delaySpeed);
  off();
- delay(changeSpeed);
+ delay(delaySpeed);
 }
 
 /**
@@ -423,7 +304,7 @@ void blink(int color, int changeSpeed) {
 //starts fast, then ends slower
 void gradualBlinkIncrease(int minSpeed, int maxSpeed, int interval) {
   for(int i = minSpeed; i < maxSpeed; i += interval) {
-    allRandomColors(i, 0, MAX_VAL + 1);
+    allRandomColors(0, MAX_VAL + 1, i);
     blink(i);
   }
 }
@@ -439,34 +320,9 @@ void gradualBlinkIncrease(int minSpeed, int maxSpeed, int interval) {
 //starts slow, then ends faster
 void gradualBlinkDecrease(int minSpeed, int maxSpeed, int interval) {
   for(int i = maxSpeed - 1; i >= minSpeed; i -= interval) {
-    allRandomColors(i, 0, MAX_VAL + 1);
+    allRandomColors(0, MAX_VAL + 1, i);
     blink(i);
   }
-}
-
-/**
- * Makes an alternating pattern of 3 given colors with a given thickness
- * @param int thickness represents the thickness of each bar
- * @param unsigned int colors represents the 3 colors' hex values
- */
-//makes a pattern of 3 colors with specified thickness
-void alternating3Colors(int thickness, unsigned int color1,
-  unsigned int color2, unsigned int color3) {
-  CRGB colors[NUM_COLORS];
-  colors[0] = CRGB(color1);
-  colors[1] = CRGB(color2);
-  colors[2] = CRGB(color3);
-  int index = 0;
-  for(int i = 0; i < NUM_LEDS; i += thickness) {
-    for(int j = 0; j < thickness; j++) {
-      if(i + j == NUM_LEDS) {
-        return;
-      }
-      led[i + j] = colors[index];
-    }
-    index = (index + 1) % NUM_COLORS;
-  }
-  FastLED.show();
 }
 
 /**
@@ -477,7 +333,7 @@ void alternating3Colors(int thickness, unsigned int color1,
 //makes a pattern of 3 colors with specified thickness
 void alternating3Colors(int thickness, CRGB color1,
   CRGB color2, CRGB color3) {
-  CRGB colors[3];
+  CRGB colors[NUM_COLORS];
   colors[0] = color1;
   colors[1] = color2;
   colors[2] = color3;
@@ -506,7 +362,7 @@ void alternatingNColors(int thickness, CRGB colors[], int n) {
   for(int i = 0; i < NUM_LEDS; i += thickness) {
     for(int j = 0; j < thickness; j++) {
       if(i + j == NUM_LEDS) {
-        return;
+        break;
       }
       led[i + j] = colors[index];
     }
@@ -549,7 +405,7 @@ void alternatingNRandomColors(int thickness, int n, int floor1,
  * @param int thickness represents thickness of each bar
  */
 void christmasLights(int thickness) {
-  CRGB colors[3];
+  CRGB colors[NUM_COLORS];
   colors[0] = CRGB(MAX_VAL, 0, 0);
   colors[1] = CRGB(0, MAX_VAL, 0);
   colors[2] = CRGB(MAX_VAL, MAX_VAL, MAX_VAL);
@@ -598,7 +454,7 @@ void singleColorRun(CRGB color, int delaySpeed) {
 //startIndex must be before endIndex
 //endIndex is exclusive (set to 150 for all lights)
 void singleColorRun(CRGB foreground, CRGB background,
-  int delaySpeed, int startIndex, int endIndex) {
+  int startIndex, int endIndex, int delaySpeed) {
   setColor(background);
   for(int i = startIndex; i < endIndex; i++) {
     if(i == startIndex) {
@@ -622,9 +478,9 @@ void singleColorRun(CRGB foreground, CRGB background,
  * @param int endIndex represents the end point in the LED strip
  */
 //startIndex must be after endIndex
-//startIndex is exclusiv e (set to 150 for all lights)
+//startIndex is exclusive (set to 150 for all lights)
 void singleColorRunBackwards(CRGB foreground, CRGB background,
-  int delaySpeed, int startIndex, int endIndex) {
+  int startIndex, int endIndex, int delaySpeed) {
     setColor(background);
     for(int i = startIndex - 1; i >= endIndex; i--) {
       led[i] = foreground;
@@ -647,8 +503,7 @@ void singleColorRunBackwards(CRGB foreground, CRGB background,
  */
 //endIndex is exclusive (set to 150 for all lights)
 void singleColorRun(CRGB foreground, CRGB background,
-  int delaySpeed, int startIndex, int endIndex,
-  int thickness) {
+  int startIndex, int endIndex, int thickness, int delaySpeed) {
   setColor(background);
   for(int i = startIndex; i < endIndex; i++) {
     if(i == startIndex) {
@@ -668,7 +523,7 @@ void singleColorRun(CRGB foreground, CRGB background,
 /**
  * Makes lights of given color appear one by one at given speed
  * @param int maxLights represents the max number of lights at
- *  the end of the function
+ *        the end of the function
  * @param int delaySpeed represents the speed of the lights
  * @param CRGB color represents the color of the light
  */
@@ -691,7 +546,7 @@ void pop(int maxLights, int delaySpeed, CRGB color) {
  * Makes lights of given color appear one by one at given speed
  * and also overwrite a previous board
  * @param int maxLights represents the max number of lights at
- *  the end of the function
+ *        the end of the function
  * @param int delaySpeed represents the speed of the lights
  * @param CRGB color represents the color of the light
  */
@@ -714,7 +569,7 @@ void popOverwrite(int maxLights, int delaySpeed, CRGB color) {
 /**
  * Makes lights of random colors appear one by one at given speed
  * @param int maxLights represents the max number of lights at
- *  the end of the function
+ *        the end of the function
  * @param int delaySpeed represents the speed of the lights
  */
 void popRandom(int maxLights, int delaySpeed) {
@@ -738,7 +593,7 @@ void popRandom(int maxLights, int delaySpeed) {
  * @param int num represents the number of lights to go off
  * @param int delaySpeed represents the speed of the lights
  */
-//int n cannot be greater than 150
+//int num cannot be greater than 150
 void unpop(int num, int delaySpeed) {
   int count = 0;
   while(count < num) {
@@ -801,8 +656,295 @@ void waveRandom(int skip, int delaySpeed) {
  //try to use distances that divide 150 evenly
 void suicides(CRGB color, int distance, int delaySpeed) {
   for(int i = 0; i < NUM_LEDS / distance; i++) {
-    singleColorRun(color, CRGB(0,0,0), delaySpeed, 0, (i * distance) + distance);
-    singleColorRunBackwards(color, CRGB(0,0,0), delaySpeed, (i * distance) + distance, 0);
+    singleColorRun(color, CRGB(0,0,0), 0,
+      (i * distance) + distance, delaySpeed);
+    singleColorRunBackwards(color, CRGB(0,0,0),
+      (i * distance) + distance, 0, delaySpeed);
+  }
+}
+
+/**
+ * Two lights start at the two midpoints and run towards the ends
+ * @param CRGB color represents the color of the lights
+ * @param boolean keepTip true if the ends will stay on at the
+ *        end of the iterations, false if not
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitOut(CRGB color, boolean keepTip, int delaySpeed) {
+  for(int i = 0; i < HIGH_MID; i++) {
+    if(!keepTip && i == 0) {
+      led[0] = CRGB(0, 0, 0);
+      led[NUM_LEDS - 1] = CRGB(0, 0, 0);
+      FastLED.show();
+    }
+    led[LOW_MID - i] = color;
+    led[HIGH_MID + i] = color;
+    if(i != 0) {
+      led[LOW_MID - i + 1] = CRGB(0, 0, 0);
+      led[HIGH_MID + i - 1] = CRGB(0, 0, 0);
+    }
+    FastLED.show();
+    delay(delaySpeed);
+  }
+}
+
+/**
+ * Two lights start at the ends and converge towards the middle
+ * @param CRGB color represents the color of the lights
+ * @param boolean keepTip true if the mids will stay on at the
+ *        end of the iterations, false if not
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitIn(CRGB color, boolean keepTip, int delaySpeed) {
+  for(int i = 0; i < HIGH_MID; i++) {
+    if(!keepTip && i == 0) {
+      led[LOW_MID] = CRGB(0, 0, 0);
+      led[HIGH_MID] = CRGB(0, 0, 0);
+      FastLED.show();
+    }
+    led[i] = color;
+    led[NUM_LEDS - i - 1] = color;
+    if(i != 0) {
+      led[i - 1] = CRGB(0, 0, 0);
+      led[NUM_LEDS - i] = CRGB(0, 0, 0);
+    }
+    FastLED.show();
+    delay(delaySpeed);
+  }
+}
+
+/**
+ * A bar of light of given thickness starts in the middle and 
+ * runs towards the ends
+ * @param CRGB color represents the color of the lights
+ * @param int thickness represents the thickness of the bar
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitOutBar(CRGB color, int thickness, int delaySpeed) {
+  for(int i = 0; i < thickness; i++) {
+    led[LOW_MID - i] = color;
+    led[HIGH_MID + i] = color;
+  }
+  FastLED.show();
+  delay(delaySpeed);
+  for(int i = 0; i < HIGH_MID - thickness; i++) {
+    led[LOW_MID - i - thickness] = color;
+    led[LOW_MID - i] = CRGB(0, 0, 0);
+    led[HIGH_MID + i + thickness] = color;
+    led[HIGH_MID + i] = CRGB(0, 0, 0);
+    FastLED.show();
+    delay(delaySpeed);
+  }
+}
+
+/**
+ * A bar of light of given thickness starts at the ends and
+ * converges towards the middle
+ * @param CRGB color represents the color of the lights
+ * @param int thickness represents the thickness of the bar
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitInBar(CRGB color, int thickness, int delaySpeed) {
+  for(int i = 0; i < thickness; i++) {
+    led[i] = color;
+    led[NUM_LEDS - i - 1] = color;
+  }
+  FastLED.show();
+  delay(delaySpeed);
+  for(int i = 0; i < HIGH_MID - thickness; i++) {
+    led[i + thickness] = color;
+    led[i] = CRGB(0, 0, 0);
+    led[NUM_LEDS - i - 1 - thickness] = color;
+    led[NUM_LEDS - i - 1] = CRGB(0, 0, 0);
+    FastLED.show();
+    delay(delaySpeed);
+  }
+}
+
+/**
+ * Main demo function that demos a majority of the functions.
+ * @param int choice represents an integer 0-12 inclusive that
+ *        picks which function to perform
+ */
+void demo(int choice) {
+  off();
+  CRGB color = randomColor();
+
+  //changes color with blinks 3-5 times per iteration
+  if(choice == 0) {
+    //runs 3-5 times
+    int iterations = random(3, 6);
+    int delaySpeed1 = random(2, 11);
+    int delaySpeed2 = random(2, 11);
+    for(int i = 0; i < iterations; i++) {
+      color = randomColor();
+      setColor(color);
+      //delays by 0.2-1 seconds
+      delay(delaySpeed1 * 100);
+      off();
+      delay(delaySpeed2 * 100);
+    }
+  }
+  
+  //changes strip to all random colors and blinks 3-5 times
+  if(choice == 1) {
+    //runs 3-5 times
+    int iterations = random(3, 6);
+    int delaySpeed1 = random(2, 11);
+    int delaySpeed2 = random(2, 11);
+    for(int i = 0; i < iterations; i++) {
+      color = randomColor();
+      allRandomColors(0, 256, delaySpeed1 * 100);
+      //delays by 0.2-1 seconds
+      off();
+      delay(delaySpeed2 * 100);
+    }
+  }
+  
+  //fades between RGB
+  if(choice == 2) {
+    int delaySpeed = random(5, 11);
+    fadeRGB(delaySpeed);
+  }
+
+  //makes random colored line segments
+  if(choice == 3) {
+    int iterations = random(10, 21);
+    int delaySpeed = random(100, 750);
+    off();
+    for(int i = 0; i < iterations; i++) {
+      int num1 = random(0, 120);
+      int num2 = random(num1 + 1, 150);
+      color = randomColor();
+      setColor(color, num1, num2);
+      delay(delaySpeed);
+      off();
+    }
+  }
+
+  //gradual blink increase and decrease with random colors
+  if(choice == 4) {
+    int startSpeed = random(100, 250);
+    int endSpeed = random(500, 1000);
+    int interval = random(10, 80);
+    gradualBlinkIncrease(startSpeed, endSpeed, interval);
+    gradualBlinkDecrease(startSpeed, endSpeed, interval);
+  }
+
+  //alternating bands of random colors with thickness
+  if(choice == 5) {
+    for(int i = 0; i < 5; i++) {
+      int numColors = random(2, 5);
+      int thickness = random(2, 30);
+      alternatingNRandomColors(thickness, numColors);
+      delay(3000);
+    }
+  }
+
+  //meet in the middle function with thickness
+  if(choice == 6) {
+    //runs 5-10 times
+    int iterations = random(5, 11);
+    int thickness = random(10, 41);
+    int delaySpeed = random(15, 50);
+    for(int i = 0; i < iterations; i++) {
+      color = randomColor();
+      splitOutBar(color, thickness, 50);
+      splitInBar(color, thickness, 50);
+    }
+  }
+
+  //single light meet in the middle function
+  if(choice == 7) {
+    int iterations = random(5, 11);
+    int delaySpeed = random(15, 50);
+    for(int i = 0; i < iterations; i++) {
+      color = randomColor();
+      splitOut(color, false, delaySpeed);
+      splitIn(color, false, delaySpeed);
+    }
+  }
+
+  //single light split out or in
+  if(choice == 8) {
+    int iterations = random(4, 10);
+    int secondChoice = random(0,2);
+    int delaySpeed = random(15, 50);
+    if(secondChoice == 0) {
+      for(int i = 0; i < iterations; i++) {
+        color = randomColor();
+        splitOut(color, true, delaySpeed);
+      }
+    }
+    else {
+      for(int i = 0; i < iterations; i++) {
+        color = randomColor();
+        splitIn(color, true, delaySpeed);
+      }
+    }
+  }
+
+  //single color run with random thickness
+  if(choice == 9) {
+    //runs 5-10 times
+    int iterations = random(5, 11);
+    int delaySpeed = random(20, 51);
+    for(int i = 0; i < iterations; i++) {
+      CRGB color1 = randomColor();
+      CRGB color2 = randomColor();
+      int thickness = random(1, 51);
+      singleColorRun(color1, color2, 0, 150, 
+        thickness, delaySpeed);
+    }
+  }
+
+  //multicolor pop and unpop
+  if(choice == 10) {
+    //runs 3-7 times
+    int iterations = random(3, 8);
+    for(int i = 0; i < iterations; i++) {
+      off();
+      int num = random(50, 151);
+      int delaySpeed = random(5, 40);
+      randomAppearDisappear(num, delaySpeed);
+    }
+  }
+
+  //single color pop and unpop
+  if(choice == 11) {
+    int iterations = random(3, 8);
+    for(int i = 0; i < iterations; i++) {
+      color = randomColor();
+      int num = random(50, 151);
+      int delaySpeed = random(5, 40);
+      pop(num, delaySpeed, color);
+      unpop(num, delaySpeed);
+    }
+  }
+
+  //wave skip-fill
+  if(choice == 12) {
+    //runs 5-10 times
+    int iterations = random(5, 11);
+    for(int i = 0; i < iterations; i++) {
+      int bigDelay = random(10, 30);
+      int delaySpeed1 = random(15, 30);
+      int delaySpeed2 = random(31, 50);
+      CRGB color1 = randomColor();
+      int skip1 = random(1, 4);
+      wave(color1, skip1, delaySpeed1);
+      delay(bigDelay * 100);
+      waveRandom(skip1, delaySpeed1);
+      delay(bigDelay * 100);
+      off();
+      CRGB color2 = randomColor();
+      int skip2 = random(5, 7);
+      wave(color2, skip2, delaySpeed2);
+      delay(bigDelay * 100);
+      waveRandom(skip2, delaySpeed2);
+      delay(bigDelay * 100);
+      off();
+    }
   }
 }
 
