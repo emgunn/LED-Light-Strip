@@ -10,9 +10,12 @@
 #define NUM_COLORS 3
 #define LOW_MID 74
 #define HIGH_MID 75
+#define NUM_SELECTIONS 13
 
 CRGB led[NUM_LEDS];
 CRGB backup[NUM_LEDS];
+
+int lastChoice;
 
 void setup() {
   FastLED.addLeds<WS2811, LED_PIN>(led, NUM_LEDS);
@@ -20,7 +23,10 @@ void setup() {
 }
 
 void loop() {
-  int selection = random(0, 13);
+  int selection = random(0, NUM_SELECTIONS);
+  if(lastChoice == selection) {
+    selection = (selection + 1) % NUM_SELECTIONS;
+  }
   demo(selection);
 }
 
@@ -187,7 +193,7 @@ void fadeRGB(int delaySpeed) {
  * @param int iterations represents the number of iterations to
  *        go through before ending, set it to a high number like
  *        10000
- * @param int timeDelay represents the time in ms to delay each iteration
+ * @param int delaySpeed represents the time in ms to delay each iteration
  */
 //set delay to 0 for a dynamic color set
 //set delay to 10 for a slower change
@@ -224,8 +230,7 @@ void fadeRandomColors(int iterations, int delaySpeed) {
 }
 
 /**
- * Sets the entire strip to a random color with given floors
- * and ceilings for the R, G, and B values
+ * Sets the entire strip to a random color
  * @param int changeSpeed represents the timed delay in ms
  */
 void setRandomColor(int delaySpeed) {
@@ -239,9 +244,9 @@ void setRandomColor(int delaySpeed) {
 /**
  * Sets the entire strip to a random color with given floors
  * and ceilings for the R, G, and B values
- * @param int changeSpeed represents the timed delay in ms
  * @param int floor1 represents the floor for the RGB values
  * @param int ceiling represents the ceiling for the RGB values
+ * @param int delaySpeed represents the timed delay in ms
  */
 //int floor should be 0 for all colors
 //int ceiling should be 256 for all colors
@@ -255,9 +260,9 @@ void setRandomColor(int floor1, int ceiling, int delaySpeed) {
 
 /**
  * Sets each individual LED light to a random color within a given range
- * @param int changeSpeed represents the delay in ms
  * @param int floor1 represents the minimum value (inclusive) for R, G, and B
  * @param int ceiling represents the maximum value (exclusive) for R, G, and B
+ * @param int delaySpeed represents the delay in ms
  */
 //0 and 256 for all colors
 void allRandomColors(int floor1, int ceiling, int delaySpeed) {
@@ -270,26 +275,13 @@ void allRandomColors(int floor1, int ceiling, int delaySpeed) {
 
 /**
  * Shuts off the entire strip for given time in ms
- * @param int changeSpeed represents delay in ms
+ * @param int delaySpeed represents delay in ms
  */
 //color has already been set and shown
 void blink(int delaySpeed) {
   //blinks it off
   off();
   delay(delaySpeed);
-}
-
-/**
- * Shuts off the entire strip for given time in ms
- * Also sets the strip to a specified color
- * @param int color represents hex value of color
- * @param int changeSpeed represents delay in ms
- */
-void blink(int color, int delaySpeed) {
- setColor(color);
- delay(delaySpeed);
- off();
- delay(delaySpeed);
 }
 
 /**
@@ -447,9 +439,9 @@ void singleColorRun(CRGB color, int delaySpeed) {
  * as a speed
  * @param CRGB foreground represents the color of the running light
  * @param CRGB background represents the color of the background lights
- * @param int delaySpeed represents the delay time in ms
  * @param int startIndex represents the starting point in the LED strip
  * @param int endIndex represents the end point in the LED strip
+ * @param int delaySpeed represents the delay time in ms
  */
 //startIndex must be before endIndex
 //endIndex is exclusive (set to 150 for all lights)
@@ -845,9 +837,10 @@ void demo(int choice) {
   if(choice == 6) {
     //runs 5-10 times
     int iterations = random(5, 11);
-    int thickness = random(10, 41);
     int delaySpeed = random(15, 50);
     for(int i = 0; i < iterations; i++) {
+      off();
+      int thickness = random(10, 41);
       color = randomColor();
       splitOutBar(color, thickness, 50);
       splitInBar(color, thickness, 50);

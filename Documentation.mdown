@@ -82,3 +82,239 @@ Gradually changes colors by adding or subtracting 1 randomly from either the R, 
 **PARAMETERS**:
 * int iterations - number of iterations to go through before ending the function
 * int delaySpeed - time in ms to delay each iteration
+
+## void setRandomColor(int delaySpeed)
+Sets the entire strip to a random color
+
+**PARAMETERS**:
+* int delaySpeed - time in ms to delay the entire function
+
+## void setRandomColor(int floor1, int ceiling, int delaySpeed)
+Sets the entire strip to a random color with a given floor and ceiling for the RGB values
+
+**PARAMETERS**:
+* int floor1 - floor for the RGB values (inclusive)
+* int ceiling - ceiling for the RGB values (exclusive)
+* int delaySpeed - time in ms to delay the entire function
+
+## void allRandomColors(int floor1, int ceiling, int delaySpeed)
+Sets each individual LED light to a random color within a given floor and ceiling for the RGB values
+
+**PARAMETERS**:
+* int floor1 - floor of the RGB values
+* int ceiling - ceiling of the RGB values
+* int delaySpeed - time in ms to delay the entire function
+
+## void blink(int delaySpeed)
+Shuts off the entire strip for a given time
+
+**PARAMETERS**:
+* int delaySpeed - time in ms to delay the entire function
+
+## void gradualBlinkIncrease(int minSpeed, int maxSpeed, int interval)
+Starts blinking with a faster rate, then ends with a slower rate
+
+**PARAMETERS**:
+* int minSpeed - minimum time in ms of blink (inclusive)
+* int maxSpeed - maximum time in ms of blink (exclusive)
+* int interval - step size of each iteration
+
+## void gradualBlinkDecrease(int minSpeed, int maxSpeed, int interval)
+Starts blinking with a slower rate, then ends with a faster rate
+
+**PARAMETERS**:
+* int minSpeed - minimum time in ms of blink (inclusive)
+* int maxSpeed - maximum time in ms of blink (exclusive)
+* int interval - step size of each iteration
+
+## void alternating3Colors(int thickness, [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color1, [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color2, [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color3)
+Makes an alternating pattern of 3 given colors with given thickness
+
+**PARAMETERS**:
+* int thickness - thickness of each color bar
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color1 - first color
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color2 - second color
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color3 - third color
+
+## void alternatingNColors(int thickness, [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) colors[], int n)
+Makes an alternating pattern of n colors with given thickness
+
+**PARAMETERS**:
+* int thickness - thickness of each color bar
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) colors[] - array of colors to use
+* int n - number of distinct colors
+
+## void alternatingNRandomColors(int thickness, int n)
+Makes an alternating pattern of n randomly-generated colors with given thickness
+
+**PARAMETERS**:
+* int thickness - thickness of each color bar
+* int n - number of distinct colors
+
+## void alternatingNRandomColors(int thickness, int n, int floor1, int ceiling)
+Makes an alternating pattern of n randomly-generated colors (within a given floor and ceiling) with given thickness
+
+**PARAMETERS**:
+* int thickness - thickness of each color bar
+* int n - number of distinct colors
+* int floor1 - floor of RGB values
+* int ceiling - ceiling of RGB values
+
+## void christmasLights(int thickness)
+Creates a Christmas-themed LED configuration with the colors red, green, and white
+
+**PARAMETERS**:
+* int thickness - thickness of each color bar
+
+## void singleColorRun([CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color, int delaySpeed)
+Makes a single light of given color run across (increasing index) an unlit strip
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the running light
+* int delaySpeed - time in ms between each adjacent LED
+
+## void singleColorRun([CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) foreground, [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) background, int startIndex, int endIndex, int delaySpeed)
+Makes a single light of a given foreground color run across (increasing index) a strip of background color
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) foreground - color of the running light
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) background - color of the remaining strip
+* int startIndex - index of the beginning of range, must be less than endIndex (inclusive)
+* int endIndex - index of the end of range, must be greater than startIndex (exclusive)
+* int delaySpeed - time in ms between each adjacent LED
+
+## void singleColorRun([CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) foreground, [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) background, int startIndex, int endIndex, int thickness, int delaySpeed)
+Makes a single bar of light of a given color run across a given background color. Takes in a given starting point and ending point
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) foreground - color of the running bar of light
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) background - color of the remaining strip
+* int startIndex - index of the beginning of range, must be less than endIndex (inclusive)
+* int endIndex - index of the end of range, must be greater than startIndex (exclusive)
+* int thickness - thickness of each color bar
+* int delaySpeed - time in ms between each adjacent LED
+
+## void singleColorRunBackwards([CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) foreground, [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) background, int startIndex, int endIndex, int delaySpeed)
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) foreground - color of the running light
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) background - color of the remaining strip
+* int startIndex - index of the beginning of range, must be greater than endIndex (exclusive)
+* int endIndex - index of the end of range, must be less than startIndex (inclusive)
+* int delaySpeed - time in ms between each adjacent LED	
+
+## void pop(int maxLights, int delaySpeed, CRGB color)
+Makes lights of a given color appear one by one at a given speed
+
+**PARAMETERS**:
+* int maxLights - max number of lights to turn on
+* int delaySpeed - time in ms between each consecutive LED
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the lights
+
+## void popOverwrite(int maxLights, int delaySpeed, CRGB color)
+Makes lights of given color appear one by one at given speed, can overwrite a previous LED configuration
+
+**BUG**: Do not use values that are too bright; do not let this run for too long
+
+**PARAMETERS**:
+* int maxLights - max number of lights to turn on
+* int delaySpeed - time in ms between each consecutive LED
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the lights
+
+## void popRandom(int maxLights, int delaySpeed)
+Makes lights of random colors appear one by one at given speed
+
+**PARAMETERS**:
+* int maxLights - max number of lights to turn on
+* int delaySpeed - time in ms between each consecutive LED
+
+## void unpop(int num, int delaySpeed)
+Randomly makes lights disappear up to a given number
+
+**PARAMETERS**:
+* int num - number of lights to turn off
+* int delaySpeed - time in ms between each consecutive LED
+
+## randomAppearDisappear(int num, int delaySpeed)
+Random colored lights appear first, then disappear
+
+**PARAMETERS**:
+* int num - number of lights to turn on and off
+* int delaySpeed - time in ms between each consecutive LED
+
+## void wave(CRGB color, int skip, int delaySpeed)
+Adds lights from the beginning consecutively, one-by-one
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the lights
+* int skip - space between each light
+* int delaySpeed - time in ms between each consecutive LED
+
+## void waveRandom(int skip, int delaySpeed)
+Adds random colored lights from the beginning consecutively, one-by-one
+
+**PARAMETERS**:
+* int skip - space between each light
+* int delaySpeed - time in ms between each consecutive LED
+
+## void suicides(CRGB color, int distance, int delaySpeed)
+A single light moves back and forth with the same start point, but with further and further end points
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the light
+* int distance - length to increase each suicide by; a number that evenly divides 150 is recommended
+* int delaySpeed - time in ms between each adjacent LED
+
+## void splitOut(CRGB color, boolean keepTip, int delaySpeed)
+Two lights start at the two midpoints and run towards their respective ends
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the light
+* boolean keepTip - true for ends to stay on during the next iteration, false if not
+* int delaySpeed - time in ms between each adjacent LED
+
+## void splitIn(CRGB color, boolean keepTip, int delaySpeed)
+Two lights start at the ends and converge towards the middle
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the light
+* boolean keepTip - true for ends to stay on during the next iteration, false if not
+* int delaySpeed - time in ms between each adjacent LED
+
+## void splitOutBar(CRGB color, int thickness, int delaySpeed)
+A bar of light of given thickness starts in the middle and breaks in half, runs towards the ends
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the light
+* int thickness - thickness of each colored bar
+* int delaySpeed - time in ms between each adjacent LED
+
+## void splitInBar(CRGB color, int thickness, int delaySpeed)
+Two bars of light of given thickness start at the ends and combine with each other in the middle
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - color of the light
+* int thickness - thickness of each colored bar
+* int delaySpeed - time in ms between each adjacent LED
+
+## void demo(int choice)
+Main demo function that performs a majority of the functions
+
+**PARAMETERS**:
+* int choice - an integer 0-12 (inclusive) that picks which function to perform
+
+Choice | Description
+--- | ---
+0 | Changes strip color with blinks 3-5 times
+1 | Changes strip to all random colors and blinks 3-5 times
+2 | Strip fades in and out of red, green, and blue
+3 | Makes line segments of random color and length
+4 | Blinks with gradually increasing or decreasing frequency
+5 | Makes alternating bars of random colors with random thickness
+6 | Bars that meet in the middle and bounce off each other
+7 | Two single lights that meet in the middle and bounce off each other
+8 | Single light that splits out from the middle or two lights on the ends that combine in the middle
+9 | Single bar of lights of random thickness runs
+10 | Multicolored lights randomly appear and disappear
+11 | Lights of a single color randomly appear and disappear
+12 | Lights run and skip a random number of lights each step

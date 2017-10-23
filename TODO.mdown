@@ -1,0 +1,8 @@
+TO-DO:
+======
+
+* run function that speeds up and slows down by changing delay
+
+* battery/loading screen: light strip fills up in blocks
+
+* alternating lines that pass through each other
