@@ -1,0 +1,13 @@
+FUNCTION DOCUMENTATION
+======================
+
+## void setup()
+Initializes the LED strip. Code in the body of this function is executed once.
+
+## void loop()
+Code in the body of this function is repeated indefinitely.
+
+## void setColor(CRGB color)
+Sets the entire strip to given color and shows it
+
+Parameters:
