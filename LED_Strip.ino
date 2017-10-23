@@ -25,7 +25,7 @@ void loop() {
 }
 
 /**
- * Sets entire strip to given color and shows it
+ * Sets the entire strip to given color and shows it
  * @param CRGB color represents the color
  */
 void setColor(CRGB color) {
@@ -57,7 +57,7 @@ CRGB randomColor() {
 }
 
 /**
- * Generates a random color with values between 0-255
+ * Generates a random color with values between given floor and ceiling
  * @param int floor1 represents floor of RGB values
  * @param int ceiling represents ceiling of RGB values
  * @return CRGB random color
@@ -90,7 +90,7 @@ boolean isOff(CRGB led) {
 }
 
 /**
- * Saves the current board into one of the save slots
+ * Saves the current board into the backup board
  */
 void saveBoard() {
   for(int i = 0; i < NUM_LEDS; i++) {
@@ -133,8 +133,8 @@ void loadBoard(int startIndex, int endIndex) {
 
 /**
  * Switches between red, green, and blue. Fades in and out
- * @param int timeDelay represents the amount of time in ms
- *        to delay the fade (timeDelay = 10 is a good setting)
+ * @param int delaySpeed represents the amount of time in ms
+ *        to delay the fade (10 is a good setting)
  */
 void fadeRGB(int delaySpeed) {
   for(int i = 0; i < MAX_VAL + 1; i++) {

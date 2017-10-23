@@ -1,6 +1,8 @@
 FUNCTION DOCUMENTATION
 ======================
 
+Here you will find a list of the functions found in LED-Strip.ino. Some of them are incomplete or buggy (they will say so if they are).
+
 ## void setup()
 Initializes the LED strip. Code in the body of this function is executed once.
 
@@ -8,6 +10,67 @@ Initializes the LED strip. Code in the body of this function is executed once.
 Code in the body of this function is repeated indefinitely.
 
 ## void setColor(CRGB color)
-Sets the entire strip to given color and shows it
+Sets the entire strip to the given color and shows it
 
-Parameters:
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - represents the color to be set
+
+## void setColor(CRGB color, int startIndex, int endIndex)
+Set the entire strip to the given color within a range and shows it
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) color - represents the color to be set
+* int startIndex - index of the beginning of range (inclusive)
+* int endIndex - index of the end of range (inclusive)
+
+## [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) randomColor()
+Generates a random color with RGB values between 0-255 *(inclusive)
+
+**RETURN**: [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) random color
+
+## [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) randomColor()
+Generates a random color with RGB values between the given floor and ceiling
+
+**PARAMETERS**:
+* int floor1 - floor of RGB values (inclusive)
+* int ceiling - ceiling of RGB values (exclusive)
+
+**RETURN**: [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) random color
+
+## void off()
+Turns off all the lights by setting them to black and showing them
+
+## boolean isOff(CRGB led)
+Getter method to check if an LED is off (black)
+
+**PARAMETERS**:
+* [CRGB](http://fastled.io/docs/3.1/struct_c_r_g_b.html) led color object/light to be checked
+
+**RETURN**: boolean true if off, false if on
+
+## void saveBoard()
+Saves the current LED configuration into a backup
+
+## void saveBoard(int startIndex, int endIndex)
+Saves the current LED configuration within a given range into a backup
+
+**PARAMETERS**:
+* int startIndex start of the range to save (inclusive)
+* int endIndex end of the range to save (inclusive)
+
+## void loadBoard()
+Loads the saved LED configuration
+
+## void loadBoard(int startIndex, int endIndex)
+Loads the saved LED configuration within a given range
+
+**PARAMETERS**:
+* int startIndex start of the range to load (inclusive)
+* int endIndex end of the range to load (inclusive)
+
+## void fadeRGB(int delaySpeed)
+Switches between red, green, and blue. Fades in and out
+
+**PARAMETERS**:
+* int delaySpeed the amount of time in ms between each change in brightness
+
