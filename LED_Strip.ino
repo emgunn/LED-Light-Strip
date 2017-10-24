@@ -488,10 +488,10 @@ void singleColorRunBackwards(CRGB foreground, CRGB background,
  * as a speed. Can also specify a thickness for the running bar of light
  * @param CRGB foreground represents the color of the running light
  * @param CRGB background represents the color of the background lights
- * @param int delaySpeed represents the delay time in ms
  * @param int startIndex represents the starting point in the LED strip
  * @param int endIndex represents the end point in the LED strip
  * @param int thickness represents the thickness of the running bar
+ * @param int delaySpeed represents the delay time in ms
  */
 //endIndex is exclusive (set to 150 for all lights)
 void singleColorRun(CRGB foreground, CRGB background,

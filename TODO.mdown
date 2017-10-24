@@ -8,3 +8,7 @@ TO-DO:
 * battery/loading screen: light strip fills up in blocks
 
 * alternating lines that pass through each other
+
+* function that makes lights cross like this:
+x   x   x   x   x   x     o   o   o   o   o   o
+		      x o x o x o x o x o 
