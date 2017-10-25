@@ -349,7 +349,7 @@ Choice | Description
 1 | Changes strip to all random colors and blinks 3-5 times
 2 | Strip fades in and out of red, green, and blue
 3 | Makes line segments of random color and length
-4 | Blinks with gradually increasing or decreasing frequency
+4 | Two colors cross paths and interlace each other
 5 | Makes alternating bars of random colors with random thickness
 6 | Bars that meet in the middle and bounce off each other
 7 | Two single lights that meet in the middle and bounce off each other
@@ -360,4 +360,4 @@ Choice | Description
 12 | Lights run and skip a random number of lights each step
 13 | Lights spawn in the middle and stack at the ends OR lights spawn at the ends and stack in the middle
 14 | Bars of light spawn in the middle and stack at the ends OR bars of light spawn at the ends and stack in the middle
-15 | Two colors cross paths and interlace each other
+15 | Blinks with gradually increasing or decreasing frequency 

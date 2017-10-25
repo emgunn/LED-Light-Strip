@@ -21,7 +21,7 @@ int lastChoice;
 void setup() {
   FastLED.addLeds<WS2811, LED_PIN>(led, NUM_LEDS);
   //insert static setup code below
-  randomSeed(random(1000));
+  randomSeed(analogRead(0));
 }
 
 void loop() {
@@ -33,10 +33,9 @@ void loop() {
   demo(selection);
 
   //play the choices sequentially
-  /*
   for(int i = 0; i < NUM_SELECTIONS; i++) {
     demo(i);
-  }*/
+  }
 }
 
 /**
@@ -932,13 +931,16 @@ void demo(int choice) {
     }
   }
 
-  //gradual blink increase and decrease with random colors
+  //two colors cross paths and interlace each other
   if(choice == 4) {
-    int startSpeed = random(100, 250);
-    int endSpeed = random(500, 1000);
-    int interval = random(10, 80);
-    gradualBlinkIncrease(startSpeed, endSpeed, interval);
-    gradualBlinkDecrease(startSpeed, endSpeed, interval);
+    //runs 20-30 times
+    int iterations = random(20, 31);
+    for(int i = 0; i < iterations; i++) {
+      CRGB color1 = randomColor();
+      CRGB color2 = randomColor();
+      int delaySpeed = random(20, 50);
+      crossPaths(color1, color2, delaySpeed);
+    }
   }
 
   //alternating bands of random colors with thickness
@@ -967,8 +969,8 @@ void demo(int choice) {
 
   //single light meet in the middle function
   if(choice == 7) {
-    //runs 2-4 times
-    int iterations = random(2, 5);
+    //runs 4-8 times
+    int iterations = random(4, 9);
     for(int i = 0; i < iterations; i++) {
       int delaySpeed = random(15, 50);
       color = randomColor();
@@ -1099,16 +1101,13 @@ void demo(int choice) {
     }
   }
 
-  //two colors cross paths and interlace each other
+  //gradual blink increase and decrease with random colors
   if(choice == 15) {
-    //runs 20-30 times
-    int iterations = random(20, 31);
-    for(int i = 0; i < iterations; i++) {
-      CRGB color1 = randomColor();
-      CRGB color2 = randomColor();
-      int delaySpeed = random(20, 50);
-      crossPaths(color1, color2, delaySpeed);
-    }
+    int startSpeed = random(100, 250);
+    int endSpeed = random(500, 1000);
+    int interval = random(10, 80);
+    gradualBlinkIncrease(startSpeed, endSpeed, interval);
+    gradualBlinkDecrease(startSpeed, endSpeed, interval);
   }
 }
 
