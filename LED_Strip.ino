@@ -10,7 +10,8 @@
 #define NUM_COLORS 3
 #define LOW_MID 74
 #define HIGH_MID 75
-#define NUM_SELECTIONS 13
+#define NUM_SELECTIONS 16
+#define TWO 2
 
 CRGB led[NUM_LEDS];
 CRGB backup[NUM_LEDS];
@@ -754,8 +755,117 @@ void splitInBar(CRGB color, int thickness, int delaySpeed) {
 }
 
 /**
+ * Two single pixels start in the middle and travel towards
+ * the ends each iteration. The ends stack
+ * @param CRGB color represents the color of the lights
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitOutStack(CRGB color, int delaySpeed) {
+  for(int i = 0; i < HIGH_MID; i++) {
+    for(int j = 0; j < HIGH_MID - i; j++) {
+      led[LOW_MID - j] = color;
+      led[HIGH_MID + j] = color;
+      if(j != 0) {
+        led[LOW_MID - j + 1] = CRGB(0, 0, 0);
+        led[HIGH_MID + j - 1] = CRGB(0, 0, 0);
+      }
+      FastLED.show();
+      delay(delaySpeed);
+    }
+  }
+}
+
+/**
+ * Two single pixels start at the ends and travel towards
+ * the middle each iteration. The middle stacks outwards
+ * @param CRGB color represents the color of the lights
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitInStack(CRGB color, int delaySpeed) {
+  for(int i = 0; i < HIGH_MID; i++) {
+    for(int j = 0; j < HIGH_MID - i; j++) {
+      led[j] = color;
+      led[NUM_LEDS - j - 1] = color;
+      if(j != 0) {
+        led[j - 1] = CRGB(0, 0, 0);
+        led[NUM_LEDS - j] = CRGB(0, 0, 0);
+      }
+      FastLED.show();
+      delay(delaySpeed);
+    }
+  }
+}
+
+/**
+ * Bars of light of given thickness split out from the middle and
+ * stack at the ends
+ * @param CRGB color represents color of the light
+ * @param int thickness represents thickness of the bar
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitOutBarStack(CRGB color, int thickness, int delaySpeed) {
+  for(int j = 0; j < NUM_LEDS / thickness; j++) {
+    for(int i = 0; i < thickness; i++) {
+      led[LOW_MID - i] = color;
+      led[HIGH_MID + i] = color;
+    }
+    FastLED.show();
+    delay(delaySpeed);
+    for(int i = 0; i < HIGH_MID - (thickness * (j + 1)); i++) {
+      led[LOW_MID - i - thickness] = color;
+      led[LOW_MID - i] = CRGB(0, 0, 0);
+      led[HIGH_MID + i + thickness] = color;
+      led[HIGH_MID + i] = CRGB(0, 0, 0);
+      FastLED.show();
+      delay(delaySpeed);
+    }
+  }
+}
+
+/**
+ * Bars of given thickness start at the ends and converge
+ * and stack in the middle
+ * @param CRGB color represents color of the light
+ * @param int thickness represents thickness of the bar
+ * @param int delaySpeed represents the speed of the lights
+ */
+void splitInBarStack(CRGB color, int thickness, int delaySpeed) {
+  for(int j = 0; j < NUM_LEDS / thickness; j++) {
+    for(int i = 0; i < thickness; i++) {
+      led[i] = color;
+      led[NUM_LEDS - i - 1] = color;
+    }
+    FastLED.show();
+    delay(delaySpeed);
+    for(int i = 0; i < HIGH_MID - (thickness * (j + 1)); i++) {
+      led[i + thickness] = color;
+      led[i] = CRGB(0, 0, 0);
+      led[NUM_LEDS - i - 1 - thickness] = color;
+      led[NUM_LEDS - i - 1] = CRGB(0, 0, 0);
+      FastLED.show();
+      delay(delaySpeed);
+    }
+  }
+}
+
+/**
+ * Two colors cross paths and interlace each other
+ * @param CRGB leftColor represents left side color
+ * @param CRGB rightColor represents right side color
+ * @param int delaySpeed represents the speed of the lights
+ */
+void crossPaths(CRGB leftColor, CRGB rightColor, int delaySpeed) {
+  for(int i = 0; i < NUM_LEDS; i += TWO) {
+    led[i] = leftColor;
+    led[NUM_LEDS - i + 1] = rightColor;
+    FastLED.show();
+    delay(delaySpeed);
+  }
+}
+
+/**
  * Main demo function that demos a majority of the functions.
- * @param int choice represents an integer 0-12 inclusive that
+ * @param int choice represents an integer 0-16 inclusive that
  *        picks which function to perform
  */
 void demo(int choice) {
@@ -937,6 +1047,57 @@ void demo(int choice) {
       waveRandom(skip2, delaySpeed2);
       delay(bigDelay * 100);
       off();
+    }
+  }
+
+  //split out and stack on both sides or split in and stack
+  //in the middle
+  if(choice == 13) {
+    //runs 5-10 times
+    int iterations = random(5, 11);
+    for(int i = 0; i < iterations; i++) {
+      int delaySpeed = random(1, 10);
+      //1 for in, 2 for out
+      int inOrOut = random(1, 3);
+      color = randomColor();
+      if(inOrOut == 1) {
+        splitInStack(color, delaySpeed);
+      }
+      else {
+        splitOutStack(color, delaySpeed);
+      }
+    }
+  }
+
+  //same as 13 but with thickness
+  if(choice == 14) {
+    //runs 5-10 times
+    int iterations = random(5, 11);
+    for(int i = 0; i < iterations; i++) {
+      int delaySpeed = random(10, 40);
+      //1 for in, 2 for out
+      int inOrOut = random(1, 3);
+      //thickness is 2-20
+      int thickness = random(2, 21);
+      color = randomColor();
+      if(inOrOut == 1) {
+        splitInBarStack(color, thickness, delaySpeed);
+      }
+      else {
+        splitOutBarStack(color, thickness, delaySpeed);
+      }
+    }
+  }
+
+  //two colors cross paths and interlace each other
+  if(choice == 15) {
+    //runs 20-30 times
+    int iterations = random(20, 31);
+    for(int i = 0; i < iterations; i++) {
+      CRGB color1 = randomColor();
+      CRGB color2 = randomColor();
+      int delaySpeed = random(20, 50);
+      crossPaths(color1, color2, delaySpeed);
     }
   }
 }
