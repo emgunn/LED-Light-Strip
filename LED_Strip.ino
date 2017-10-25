@@ -21,6 +21,7 @@ int lastChoice;
 void setup() {
   FastLED.addLeds<WS2811, LED_PIN>(led, NUM_LEDS);
   //insert static setup code below
+  randomSeed(random(1000));
 }
 
 void loop() {
@@ -28,7 +29,14 @@ void loop() {
   if(lastChoice == selection) {
     selection = (selection + 1) % NUM_SELECTIONS;
   }
+  lastChoice = selection;
   demo(selection);
+
+  //play the choices sequentially
+  /*
+  for(int i = 0; i < NUM_SELECTIONS; i++) {
+    demo(i);
+  }*/
 }
 
 /**
@@ -865,7 +873,7 @@ void crossPaths(CRGB leftColor, CRGB rightColor, int delaySpeed) {
 
 /**
  * Main demo function that demos a majority of the functions.
- * @param int choice represents an integer 0-16 inclusive that
+ * @param int choice represents an integer 0-15 inclusive that
  *        picks which function to perform
  */
 void demo(int choice) {
@@ -959,9 +967,10 @@ void demo(int choice) {
 
   //single light meet in the middle function
   if(choice == 7) {
-    int iterations = random(5, 11);
-    int delaySpeed = random(15, 50);
+    //runs 2-4 times
+    int iterations = random(2, 5);
     for(int i = 0; i < iterations; i++) {
+      int delaySpeed = random(15, 50);
       color = randomColor();
       splitOut(color, false, delaySpeed);
       splitIn(color, false, delaySpeed);
@@ -970,17 +979,18 @@ void demo(int choice) {
 
   //single light split out or in
   if(choice == 8) {
-    int iterations = random(4, 10);
+    int iterations = random(2, 5);
     int secondChoice = random(0,2);
-    int delaySpeed = random(15, 50);
     if(secondChoice == 0) {
       for(int i = 0; i < iterations; i++) {
+        int delaySpeed = random(15, 50);
         color = randomColor();
         splitOut(color, true, delaySpeed);
       }
     }
     else {
       for(int i = 0; i < iterations; i++) {
+        int delaySpeed = random(15, 50);
         color = randomColor();
         splitIn(color, true, delaySpeed);
       }

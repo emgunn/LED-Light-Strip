@@ -341,7 +341,7 @@ Two colors cross paths and interlace each other
 Main demo function that performs a majority of the functions
 
 **PARAMETERS**:
-* int choice - an integer 0-12 (inclusive) that picks which function to perform
+* int choice - an integer 0-15 (inclusive) that picks which function to perform
 
 Choice | Description
 --- | ---
