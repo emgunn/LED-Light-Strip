@@ -3,7 +3,7 @@ README
 
 This is a short library of simple functions for a digital RGB LED light strip written in the Arduino language.
 
-There are some ngs to take note of:
+There are some things to take note of:
 
 * I used a [16.4ft WS2812B Individually Addressable LED Strip Light](https://www.amazon.com/gp/product/B00ZHB9M6A/ref=oh_aui_detailpage_o04_s00?ie=UTF8&psc=1).
 * It contains 150 lights with addresses (each light is actually comprised of 3 LED's: a green, a red, and a blue; therefore there are actually 450 lights).
